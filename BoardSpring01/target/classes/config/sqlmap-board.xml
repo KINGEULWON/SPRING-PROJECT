@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardDAO">
+	<select id="list" resultType="boardVO">
+			select count(*) from "BOARD2"
+	</select>
+	
+	<select id="select" parameterType="int" resultType="boardVO">
+			SELECT * FROM
+			BOARD3 WHERE "seq" = #{seq}
+	</select>
+	
+	<insert id="insert" parameterType="boardVO">
+		INSERT INTO BOARD3
+		("seq","title","content","writer","password","regDate","cnt")
+		VALUES
+		(BOARD3_SEQ.nextval,
+			#{title}, #{content}, #{writer}, #{password}, SYSDATE, 0)
+		<selectKey keyProperty="seq" resultType="Integer">
+			SELECT NVL(MAX("seq"), 0) FROM BOARD3
+		</selectKey>
+	</insert>
+	
+	<update id="update" parameterType="boardVO">
+		UPDATE BOARD3 SET title = #{title},
+		content = #{content},
+		writer = #{writer}
+		WHERE "seq" = #{seq} AND password = #{password}
+	</update>
+	
+	<update id="updateCount" parameterType="int">
+		UPDATE BOARD3 SET "cnt" = "cnt" + 1 WHERE "seq" = #{seq}
+	</update>
+	
+	<delete id="delete" parameterType="boardVO">
+		DELETE FROM BOARD3 WHERE "seq" = #{seq}
+		AND "password" = #{password}
+	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM BOARD3
+	</delete>
+</mapper>
