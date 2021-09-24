@@ -13,10 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import board.dao.BoardDao;
 import board.domain.BoardVO;
@@ -24,6 +27,8 @@ import board.model.BoardDto;
 import board.model.ConnUtil;
 import board.service.BoardService;
 
+@Controller
+@SessionAttributes("BoardVO")
 public class BoardController {
 	private BoardService boardService;
 	
@@ -32,40 +37,55 @@ public class BoardController {
 	}
 		
 	@RequestMapping(value="/board/count")
-	public int getArticleCount(){
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int count = 0;
-		try{
-			pstmt = conn.prepareStatement("select count(*) from BOARD2");
-			rs = pstmt.executeQuery();
-			if(rs.next()){
-				count = rs.getInt(1);
-			}
-		} catch(Exception ex){
-				ex.printStackTrace();
-		} finally{
-			if(rs != null) try{rs.close(); } catch(SQLException e){}
-			if(pstmt != null) try{pstmt.close(); } catch(SQLException e){}
-			if(conn != null) try{conn.close(); } catch(SQLException e){}
-		}
-		return count;
+	public int listCount(){
+		boardService.listCount();
 	}
 	
 	
 	@RequestMapping(value="/board/list")
-	public List<BoardVO> getArticles(Model model, HttpSession session, @RequestParam(defaultValue="1") int start, int end){
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<BoardVO> articleList= boardService.list();
-		map.put("result", articleList);
-		return articleList;
+	public String list (Model model, HttpSession session, @RequestParam(value="pageNum", defaultValue="0") int pageNum){
+		
+		if (pageNum == 0) {
+			pageNum = 1; 
+			}
+			int pageSize = 10; //한 페이지당 글의 개수
+			int currentPage = pageNum;
+			// 페이지의 시작 글 번호
+			
+			int startRow = (currentPage - 1) * pageSize + 1;
+			int endRow = currentPage * pageSize;	//한 페이지의 마지막 글 번호
+			int count = 0;
+			int number = 0;
+			List<BoardVO> articleList = null;
+			count = boardService.listCount();	// 전체 글 개수
+			if(count > 0) {
+				articleList = boardService.list(startRow, endRow);
+			} else { 
+				articleList = Collections.emptyList();
+			}
+			number = count - (currentPage - 1) * pageSize;	//글 목록에 표시할 글 번호
+			
+			model.addAttribute("currentPage",new Integer(currentPage));
+			model.addAttribute("startRow",new Integer(startRow));
+			model.addAttribute("endRow",new Integer(endRow));
+			model.addAttribute("count",new Integer(count));
+			model.addAttribute("pageSize",new Integer(pageSize)); 
+			model.addAttribute("number",new Integer(number));
+			model.addAttribute("articleList",articleList);
+			
+			session.setAttribute("pageNum", pageNum);
+			
+			return "/board/list";
 	}
 		
-		
+	@RequestMapping(value="/board/insert/", method=RequestMethod.GET)
+	public String insert(Model model) {
+		model.addAttribute("boardVO", new BoardVO());
+		return "/board/insert";
+	}
 	
-		@RequestMapping(value="/board/insert")
-		public void insertArticle(BoardVO article){
+	@RequestMapping(value="/board/insert")
+	public void insert(BoardVO article){
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
