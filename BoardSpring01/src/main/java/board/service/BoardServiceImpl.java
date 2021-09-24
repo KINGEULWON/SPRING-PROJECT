@@ -20,6 +20,16 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public List<BoardVO> list(){
-		return boardDao.getArticles(start, end);
+		return boardDao.list(start, end)();
+	}
+	
+	@Override
+	public void write(BoardVO boardVO) {
+		boardDao.insert(boardVO);
+	}
+	
+	@Override
+	public BoardVO read(int num) {
+		return boardDao.select(num);
 	}
 }

@@ -3,43 +3,41 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="boardDAO">
-	<select id="list" resultType="boardVO">
+	<select id="count" resultType="boardVO">
 			select count(*) from "BOARD2"
 	</select>
 	
-	<select id="select" parameterType="int" resultType="boardVO">
+	<select id="list" resultType="boardVO" parameterType="int">
 			SELECT * FROM
-			BOARD3 WHERE "seq" = #{seq}
+			<![CDATA[(select rownum RNUM, NUM, UPLOADER
+			EMAIL,SUBJECT,PASS,REGDATE,FILENAME,
+			READCOUNT,REF,STEP,DEPTH,CONTENT,IP from
+			(select*from BOARD2 order by REF desc, STEP asc))
+			where RNUM >=#{strat} and RNUM <=#{end}]]>
 	</select>
 	
-	<insert id="insert" parameterType="boardVO">
-		INSERT INTO BOARD3
-		("seq","title","content","writer","password","regDate","cnt")
-		VALUES
-		(BOARD3_SEQ.nextval,
-			#{title}, #{content}, #{writer}, #{password}, SYSDATE, 0)
-		<selectKey keyProperty="seq" resultType="Integer">
-			SELECT NVL(MAX("seq"), 0) FROM BOARD3
+	<insert id="reply" parameterType="boardVO">
+		update BOARD2 set STEP = STEP+1 where REF = #{REF} and STEP > #{STEP}
+		<selectKey keyProperty="num" resultType="Integer">
+			select max(NUM) from BOARD2
 		</selectKey>
 	</insert>
 	
-	<update id="update" parameterType="boardVO">
-		UPDATE BOARD3 SET title = #{title},
-		content = #{content},
-		writer = #{writer}
-		WHERE "seq" = #{seq} AND password = #{password}
+	<insert id="insert" parameterType="boardVO">
+		insert into BOARD2
+		(NUM, UPLOADER, EMAIL, SUBJECT, PASS, REGDATE, FILENMAE, REF, STEP, DEPTH, CONTENT, IP)
+		values(BOARD2_SEQ,nextval, #{NUM}, #{UPLOADER}, #{EMAIL}, #{SUBJECT}, #{PASS}, #{REGDATE},)
+		#{FILENAME}, #{REF}, #{STEP}, #{DEPTH}, #{CONTENT}, #{IP})
+		<selectKey keyProperty="num" resultType="Integer">
+			select max(NUM) from BOARD2
+		</selectKey>
+	</insert>
+	
+	<update id="content" parameterType="boardVO">
+		update BOARD2 set READCOUNT=READCOUNT+1 where NUM = #{NUM}
 	</update>
 	
-	<update id="updateCount" parameterType="int">
-		UPDATE BOARD3 SET "cnt" = "cnt" + 1 WHERE "seq" = #{seq}
-	</update>
-	
-	<delete id="delete" parameterType="boardVO">
-		DELETE FROM BOARD3 WHERE "seq" = #{seq}
-		AND "password" = #{password}
-	</delete>
-	
-	<delete id="deleteAll">
-		DELETE FROM BOARD3
-	</delete>
+	<select id="content" parameterType="boardVO">
+		select * from BOARD2 where NUM = #{NUM}
+	</select>
 </mapper>

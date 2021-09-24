@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 import board.domain.BoardVO;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+@Repository
 public class BoardDaoMybatis implements BoardDao{
 	
 	private SqlSessionTemplate sqlSessionTemplate;
@@ -21,23 +23,25 @@ public class BoardDaoMybatis implements BoardDao{
 	}
 	
 	@Override
-	public int getArticleCount() {
-		return sqlSessionTemplate.selectOne("count");
+	public int listCount() {
+		return sqlSessionTemplate.selectOne("listcount");
 	}
 	
 	@Override 
-	public List<BoardVO> getArticles(int start, int end){
+	public List<Map<String, String>> list(int start, int end){
 		return sqlSessionTemplate.selectList("list");
 	}
 	
 	@Override
-	public void insertArticle(BoardVO boardVO) {
+	public void insert(BoardVO boardVO) {
 		   sqlSessionTemplate.insert("insert" , boardVO);
 	}
 	
 	@Override
-	public BoardVO getArticle(int num) {
-		return sqlSessionTemplate.selectOne("content", num);
+	public BoardVO select(int num) {
+		BoardVO vo = (BoardVO) sqlSessionTemplate.selectOne("select", num);
+		return vo;
 	}
+	
 }
 
