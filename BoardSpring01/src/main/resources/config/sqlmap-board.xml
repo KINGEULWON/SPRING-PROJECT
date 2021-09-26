@@ -22,12 +22,10 @@
 	</select>
 	
 	<insert id="insert" parameterType="boardVO">
-		insert into BOARD2
-		(NUM, UPLOADER, EMAIL, SUBJECT, PASS, REGDATE, FILENMAE, REF, STEP, DEPTH, CONTENT, IP)
-		values(BOARD2_SEQ,nextval, #{NUM}, #{UPLOADER}, #{EMAIL}, #{SUBJECT}, #{PASS}, #{REGDATE},)
-		#{FILENAME}, #{REF}, #{STEP}, #{DEPTH}, #{CONTENT}, #{IP})
+		INSERT INTO BOARD2(NUM, UPLOADER, EMAIL, SUBJECT, PASS, REGDATE, REF, STEP, DEPTH, IP, CONTENT, FILENAME)
+		values(BOARD2_SEQ.nextval, #{uploader}, #{email}, #{subject}, #{pass}, SYSDATE, #{ref}, #{step}, #{depth}, #{ip},#{content}, #{filename})
 		<selectKey keyProperty="num" resultType="Integer">
-			select max(NUM) from BOARD2
+			SELECT NVL(MAX(num), 0 ) FROM BOARD2
 		</selectKey>
 	</insert>
 	

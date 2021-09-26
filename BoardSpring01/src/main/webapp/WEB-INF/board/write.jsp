@@ -15,11 +15,11 @@
 <article>
 <b>글쓰기</b>
 <br></br>
-<form method="post" name="writeForm" action="<c:url value="/board/write"/>"
-	onsubmit="return writeSave()" enctype="multipart/form-data">
+<form method="post" name="writeForm" action="<c:url value="/board/write"/>" enctype="multipart/form-data"
+	onsubmit="return writeSave()">
 	<input type="hidden" name="num" value="${article.num}">
 	<input type="hidden" name="ref" value="${article.ref}">
-	<input type="hidden" name="step" value="${aritcle.step}">
+	<input type="hidden" name="step" value="${article.step}">
 	<input type="hidden" name="depth" value="${article.depth}">	
 	<input type="hidden" name="pageNum" value="${pageNum}">
 

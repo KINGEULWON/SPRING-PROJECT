@@ -12,7 +12,7 @@
 </head>
 <body>
 <section>
-<b>자료실(전체 게시글:${listcount})</b>
+<b>자료실(전체 게시글:${count})</b>
 <table class="listwritebutton">
 	<tr>
 		<td>
@@ -20,7 +20,7 @@
 		</td>
 	</tr>
 </table>
-<c:if test="${listcount == 0}">
+<c:if test="${count == 0}">
 <table class="listtable">
 	<tr>
 		<td>
@@ -30,7 +30,7 @@
 </table>
 </c:if>
 
-<c:if test="${listcount > 0}">
+<c:if test="${count > 0}">
 <table class="listtable">
 	<tr>
 		<th id="num">번 호</th>
