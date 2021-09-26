@@ -16,7 +16,7 @@
 <table class="listwritebutton">
 	<tr>
 		<td>
-			<a href="${pageContext.request.contextPath}/board/writeForm.do">글쓰기</a>
+			<a href="<c:url value="/board/write"/>">글쓰기</a>
 		</td>
 	</tr>
 </table>
@@ -57,7 +57,7 @@
 				<img src="${pageContext.request.contextPath}/board/images/level.gif"
 					width="${5 * article.depth}">
 			</c:if>
-			<a href="${pageContext.request.contextPath}/board/content.do?num=${article.num}&pageNum=${currentPage}">
+			<a href="<c:url value="/board/content/${article.num}"/>">
 				${article.subject}</a>
 			<c:if test="${article.readcount >= 20}">
 				<img src="${pageContext.request.contextPath}/board/images/hot.gif">
@@ -88,15 +88,15 @@
 	</c:if>
 	
 	<c:if test="${startPage > pageBlock}">
-		<a href="${pageContext.request.contextPath}/board/list.do?pageNum=${startPage - pageBlock }">이전</a>
+		<a href="<c:url value="/board/list?pageNum=${startPage - pageBlock}"/>">이전</a>
 	</c:if>
 	
 	<c:forEach var="i" begin="${startPage}" end="${endPage}">
-		<a href="${pageContext.request.contextPath}/board/list.do?pageNum=${i}">[${i}]</a>
+		<a href="<c:url value="/board/list?pageNum=${i}"/>">[${i}]</a>
 	</c:forEach>
 	
 	<c:if test="${endPage < pageCount}">
-		<a href="${pageContext.request.contextPath}/board/list.do?pageNum=${startPage + pageBlock }">다음</a>
+		<a href="<c:url value="/board/list?pageNum=${startPage + pageBlock}"/>">다음</a>
 	</c:if>
 </c:if>
 </section>

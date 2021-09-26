@@ -15,5 +15,6 @@
 	   <mvc:view-resolvers>
 	   		<mvc:jsp prefix="/WEB-INF/view/"/>
 	   </mvc:view-resolvers>
-	 
+       
+       <mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>		 
 </beans>

@@ -1,30 +1,26 @@
 package board.controller;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
-import board.dao.BoardDao;
 import board.domain.BoardVO;
-import board.model.BoardDto;
-import board.model.ConnUtil;
 import board.service.BoardService;
 
 @Controller
@@ -36,14 +32,11 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 		
-	@RequestMapping(value="/board/count")
-	public int listCount(){
-		boardService.listCount();
-	}
-	
+	private static final String FILE_PATH = "C:\\uploadtest\\upload\\";
 	
 	@RequestMapping(value="/board/list")
-	public String list (Model model, HttpSession session, @RequestParam(value="pageNum", defaultValue="0") int pageNum){
+	public String list(@RequestParam(name="pageNum", required=false, defaultValue="0")int pageNum ,
+			Model model, HttpSession session){
 		
 		if (pageNum == 0) {
 			pageNum = 1; 
@@ -78,82 +71,67 @@ public class BoardController {
 			return "/board/list";
 	}
 		
-	@RequestMapping(value="/board/insert/", method=RequestMethod.GET)
-	public String insert(Model model) {
-		model.addAttribute("boardVO", new BoardVO());
-		return "/board/insert";
+		
+		@RequestMapping(value="/board/content/{num}")
+		public String read(Model model, @PathVariable int num, HttpSession req) {
+			model.addAttribute("article",boardService.read(num));
+			model.addAttribute("pageNum", req.getAttribute("pageNum"));
+			return "/board/content";
 	}
-	
-	@RequestMapping(value="/board/insert")
-	public void insert(BoardVO article){
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			int num = article.getNum();
-			int ref = article.getRef();
-			int step = article.getStep();
-			int depth = article.getDepth();
-			int number = 0;
-			String sql = "";
-			try{
-				pstmt = conn.prepareStatement("select max(num) from BOARD2");
-				rs = pstmt.executeQuery();
-				if(rs.next()){
-					number = rs.getInt(1) + 1;
-				} else {
-					number = 1;
-				}
-				if(num != 0){	//답글일 경우
-					sql = "update BOARD2 set STEP = STEP+1 where REF = ? and STEP > ?";
-					pstmt.close();
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, ref);
-					pstmt.setInt(2, step);
-					pstmt.executeUpdate();
-					step = step + 1;
-					depth = depth + 1;
-				} else {	//새글일 경우
-					ref = number;
-					step = 0;
-					depth = 0;
-				}	
-				//쿼리 작성
-				sql = "insert into BOARD2"
-						+ "(NUM, UPLOADER, EMAIL, SUBJECT, PASS, "
-						+ "REGDATE, FILENAME, REF, STEP, DEPTH, CONTENT, IP) "
-						+ "values(BOARD2_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, article.getUploader());
-				pstmt.setString(2, article.getEmail());
-				pstmt.setString(3, article.getSubject());
-				pstmt.setString(4, article.getPass());
-				pstmt.setTimestamp(5, article.getRegdate());
-				pstmt.setString(6, article.getFilename());
-				pstmt.setInt(7, ref);
-				pstmt.setInt(8, step);
-				pstmt.setInt(9, depth);
-				pstmt.setString(10, article.getContent());
-				pstmt.setString(11, article.getIp());
-				pstmt.executeUpdate();
-			}catch(Exception e){
-				e.printStackTrace();
-			}finally{
-				if(rs != null) try { rs.close(); } catch (SQLException e){}
-				if(pstmt != null) try { pstmt.close(); } catch (SQLException e){}
-				if(conn != null) try { conn.close(); } catch (SQLException e){}
-			}
-		}
 		
+		@GetMapping(value="/board/write")
+		public String write(Model model,HttpSession session) {
 		
-		@RequestMapping(value="/board/read/{seq}")
-		public String read(Model model, @PathVariable int num){
-			model.addAttribute("boardVO", boardService.read(num));
-			return "/board/read";
-		}
-		
-		@RequestMapping(value="/board/content"){
-			//해당 글번호
+			int num = 0, ref = 1, step = 0,depth = 0; 
+			BoardVO vo = new BoardVO();
+			vo.setNum(num);
+			vo.setStep(step);
+			vo.setRef(ref);	
+			vo.setDepth(depth);
 			
-			return "/board/content.jsp"; //요청에 응답할 뷰 경로
+			model.addAttribute("article", vo);
+			
+			return "/board/write";
+		}
+
+		@GetMapping(value="/board/write/{num}")
+		public String write(Model model,
+				@PathVariable int num, HttpSession session
+				) {
+			int pageNum = (int)session.getAttribute("pageNum");
+			BoardVO vo = boardService.read(num);
+			
+			model.addAttribute("article", vo);
+			model.addAttribute("pageNum", pageNum);
+			return "/board/write";
+		}
+		
+		
+		@PostMapping(value="/board/write")
+		public String write(@RequestParam("file")MultipartFile file, @Valid BoardVO boardVO, BindingResult bindingResult,
+				HttpServletRequest req, HttpSession session) throws IllegalStateException, IOException{
+			
+			String ip = req.getRemoteAddr();
+			String fileName = file.getOriginalFilename();
+			int pageNum = (int)session.getAttribute("pageNum");
+
+			if(!file.getOriginalFilename().isEmpty()) {
+				file.transferTo(new File(FILE_PATH, fileName));
+				boardVO.setFilename(fileName); 
+				boardVO.setIp(ip);
+			} else {
+				boardVO.setFilename("");
+				boardVO.setIp(ip);
+			}
+			
+			if (boardVO.getNum() == 0) {
+				session.setAttribute("pageNum", 0);
+			}
+			
+			if(bindingResult.hasErrors()) {
+				return "/board/write"; 
+			}
+			boardService.write(boardVO);
+			return "redirect:/board/list?pageNum="+pageNum;
 		}
 }

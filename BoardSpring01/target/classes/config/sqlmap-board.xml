@@ -7,7 +7,7 @@
 			select count(*) from "BOARD2"
 	</select>
 	
-	<select id="list" resultType="boardVO" parameterType="int">
+	<select id="list" resultType="boardVO" parameterType="hashmap">
 			SELECT * FROM
 			<![CDATA[(select rownum RNUM, NUM, UPLOADER
 			EMAIL,SUBJECT,PASS,REGDATE,FILENAME,
@@ -18,10 +18,11 @@
 	
 	<insert id="reply" parameterType="boardVO">
 		update BOARD2 set STEP = STEP+1 where REF = #{REF} and STEP > #{STEP}
-		<selectKey keyProperty="num" resultType="Integer">
-			select max(NUM) from BOARD2
-		</selectKey>
 	</insert>
+	
+	<select id="selectNum" resultType="int">
+		SELECT max(num) from BOARD2
+	</select>
 	
 	<insert id="insert" parameterType="boardVO">
 		insert into BOARD2
@@ -33,11 +34,12 @@
 		</selectKey>
 	</insert>
 	
-	<update id="content" parameterType="boardVO">
+	<update id="readcount" parameterType="int">
 		update BOARD2 set READCOUNT=READCOUNT+1 where NUM = #{NUM}
 	</update>
 	
-	<select id="content" parameterType="boardVO">
-		select * from BOARD2 where NUM = #{NUM}
+	<select id="content" parameterType="int" resultType="boardVO">
+		SELECT * FROM BOARD2 WHERE NUM = #{NUM}
 	</select>
+	
 </mapper>
