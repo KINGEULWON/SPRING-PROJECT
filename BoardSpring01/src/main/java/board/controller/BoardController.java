@@ -1,11 +1,16 @@
 package board.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -29,13 +34,11 @@ public class BoardController {
 	
 	private BoardService boardService;
 	
-	private static final String FILE_PATH = "C:\\uploadtest\\upload\\";
-	
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
 	}
-		
 	
+	private static final String FILE_PATH = "C:\\uploadtest\\upload\\";
 	
 	@RequestMapping(value="/board/list")
 	public String list(@RequestParam(name="pageNum", required=false, defaultValue="0")int pageNum ,
@@ -113,11 +116,10 @@ public class BoardController {
 		@PostMapping(value="/board/write")
 		public String write(@RequestParam("file")MultipartFile file, @Valid BoardVO boardVO, BindingResult bindingResult,
 				HttpServletRequest req, HttpSession session) throws IllegalStateException, IOException{
-			
 			String ip = req.getRemoteAddr();
 			String fileName = file.getOriginalFilename();
 			int pageNum = (int)session.getAttribute("pageNum");
-
+			
 			if(!file.getOriginalFilename().isEmpty()) {
 				file.transferTo(new File(FILE_PATH, fileName));
 				boardVO.setFilename(fileName); 
@@ -126,15 +128,68 @@ public class BoardController {
 				boardVO.setFilename("");
 				boardVO.setIp(ip);
 			}
-			
 			if (boardVO.getNum() == 0) {
 				session.setAttribute("pageNum", 0);
-			}
-			
+			}			
 			if(bindingResult.hasErrors()) {
 				return "/board/write"; 
 			}
 			boardService.write(boardVO);
 			return "redirect:/board/list?pageNum="+pageNum;
+		}
+		
+		
+		@RequestMapping(value="/board/download/{num}")
+		public void download(@PathVariable int num ,HttpServletResponse resp, HttpServletRequest req) {
+			BoardVO vo = boardService.read(num);
+			String filename = vo.getFilename();
+			
+			File downFile = new File(FILE_PATH + "\\"+ filename);
+			
+			if (downFile.exists() && downFile.isFile()) {
+				try {
+					filename = URLEncoder.encode(filename, "utf-8").replaceAll("\\+","%20");
+					long filesize = downFile.length();
+					
+					resp.setContentType("application/octet-stream; charset=utf-8");
+					resp.setContentLength((int) filesize);
+					String strClient = req.getHeader("user-agent");
+					
+					if (strClient.indexOf("MSIE 5.5") != -1) {
+						resp.setHeader("Content-Disposition", "filename="
+	                            + filename + ";");
+	                } else {
+	                	resp.setHeader("Content-Disposition",
+	                            "attachment; filename=" + filename + ";");
+	                }
+					resp.setHeader("Content-Length", String.valueOf(filesize));
+					resp.setHeader("Content-Transfer-Encoding", "binary;");
+					resp.setHeader("Pragma", "no-cache");
+					resp.setHeader("Cache-Control", "private");
+	 
+	                byte b[] = new byte[1024];
+	 
+	                BufferedInputStream in = new BufferedInputStream(
+	                        new FileInputStream(downFile));
+	 
+	                BufferedOutputStream out = new BufferedOutputStream(
+	                		resp.getOutputStream());
+	 
+	                int read = 0;
+	 
+	                while ((read = in.read(b)) != -1) {
+	                    out.write(b, 0, read);
+	                }
+	                out.flush();
+	                out.close();
+	                in.close();
+					
+				} catch (Exception e) {
+					System.out.println("Download Exception : " + e.getMessage());
+				}
+			} else {
+				System.out.println("Download Error : downFile Error [" + downFile + "]");
+			}
+			 
 		}
 }

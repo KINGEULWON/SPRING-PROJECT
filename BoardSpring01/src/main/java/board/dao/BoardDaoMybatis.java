@@ -35,33 +35,34 @@ public class BoardDaoMybatis implements BoardDao{
 	
 	@Override
 	public void insert(BoardVO article) {
-		   int num = article.getNum();
-		   int ref = article.getRef();
-		   int step = article.getStep();
-		   int depth = article.getDepth();
-		   int num2 = 0;
-		   
-		   if(sqlSessionTemplate.selectOne("selectNum") != null) {
-			   num2 = sqlSessionTemplate.selectOne("selectNum");
-		   }
-		   if(num2 !=0) {
-			   num2 += 1;
-		   }else {
-			   num2 = 1;
-		   }
-		   if(num != 0) {
-			   sqlSessionTemplate.update("reply", article);
-			   step = step + 1;
-			   depth = depth + 1;
-		   }else {
-			   ref = num2;
-			   step = 0;
-			   depth =  0;
-		   }
-		   article.setStep(step);
-		   article.setDepth(depth);
-		   article.setRef(ref);
-		   sqlSessionTemplate.insert("insert" , article);
+		int num = article.getNum();
+		int ref = article.getRef();
+		int step = article.getStep();
+		int depth = article.getDepth();
+		int number = 0;
+		
+		if(sqlSessionTemplate.selectOne("selectNum") != null) {
+		number = sqlSessionTemplate.selectOne("selectNum");
+		}
+		
+		if (number != 0) {
+			number += 1;
+		} else {
+			number = 1;
+		}
+		if (num != 0) {
+			sqlSessionTemplate.update("reply", article);
+			step = step + 1;
+			depth = depth +1;
+		} else {
+			ref = number;
+			step = 0;
+			depth = 0;
+		}
+		article.setRef(ref);
+		article.setStep(step);
+		article.setDepth(depth);
+		sqlSessionTemplate.insert("insert", article);
 	}
 	
 	@Override

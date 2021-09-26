@@ -13,9 +13,9 @@
 		where RNUM >= #{start} and RNUM <= #{end} ]]>
 	</select> 
 	
-	<insert id="reply" parameterType="boardVO">
+	<update id="reply" parameterType="boardVO">
 		update BOARD2 set STEP = STEP+1 where REF = #{REF} and STEP > #{STEP}
-	</insert>
+	</update>
 	
 	<select id="selectNum" resultType="int">
 		SELECT max(num) from BOARD2
