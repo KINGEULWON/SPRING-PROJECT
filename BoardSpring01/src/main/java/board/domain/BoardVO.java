@@ -2,9 +2,7 @@ package board.domain;
 
 import java.sql.Timestamp;
 
-import org.apache.ibatis.type.Alias;
 
-@Alias("BoardVO")
 public class BoardVO {
 	private int num;
 	private String uploader;
@@ -23,24 +21,6 @@ public class BoardVO {
 	private long fileSize;
 	
 	public BoardVO() {}
-	
-	public BoardVO(int num, String uploader, String email, String subject, String pass, int readcount, int ref,
-			int step, int depth, Timestamp regdate, String content, String ip, String filename) {
-		super();
-		this.num = num;
-		this.uploader = uploader;
-		this.email = email;
-		this.subject = subject;
-		this.pass = pass;
-		this.readcount = readcount;
-		this.ref = ref;
-		this.step = step;
-		this.depth = depth;
-		this.regdate = regdate;
-		this.content = content;
-		this.ip = ip;
-		this.filename = filename;
-	}
 	
 	public String getFilename() {
 		return filename;

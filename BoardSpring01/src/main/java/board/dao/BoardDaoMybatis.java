@@ -29,7 +29,7 @@ public class BoardDaoMybatis implements BoardDao{
 	}
 	
 	@Override 
-	public List<BoardVO> list(HashMap<String, Integer>map){
+	public List<BoardVO> getArticles(HashMap<String, Integer>map){
 		return sqlSessionTemplate.selectList("list", map);
 	}
 	
@@ -67,7 +67,7 @@ public class BoardDaoMybatis implements BoardDao{
 	@Override
 	public BoardVO select(int num) {
 		sqlSessionTemplate.update("readcount", num);
-		return sqlSessionTemplate.selectOne("select",num);
+		return sqlSessionTemplate.selectOne("content",num);
 	}
 	
 }

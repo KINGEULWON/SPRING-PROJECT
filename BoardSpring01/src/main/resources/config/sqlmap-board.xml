@@ -3,18 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="boardDAO">
-	<select id="listcount" resultType="boardVO">
+	<select id="listcount" resultType="int">
 			select count(*) from "BOARD2"
 	</select>
 	
-	<select id="list" resultType="boardVO" parameterType="hashmap">
-			SELECT * FROM
-			<![CDATA[(select rownum RNUM, NUM, UPLOADER
-			EMAIL,SUBJECT,PASS,REGDATE,FILENAME,
-			READCOUNT,REF,STEP,DEPTH,CONTENT,IP from
-			(select*from BOARD2 order by REF desc, STEP asc))
-			where RNUM >=#{strat} and RNUM <=#{end}]]>
-	</select>
+	<select id="list" parameterType="hashmap" resultType="boardVO">
+		<![CDATA[SELECT * FROM (select rownum RNUM, NUM, UPLOADER, EMAIL, SUBJECT, PASS, REGDATE, 
+		READCOUNT, REF, STEP, DEPTH, CONTENT, IP from (select * from BOARD2 order by REF desc, STEP asc))
+		where RNUM >= #{start} and RNUM <= #{end} ]]>
+	</select> 
 	
 	<insert id="reply" parameterType="boardVO">
 		update BOARD2 set STEP = STEP+1 where REF = #{REF} and STEP > #{STEP}

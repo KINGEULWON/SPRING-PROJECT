@@ -7,12 +7,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시판</title>
-<link href="${pageContext.request.contextPath}/board/css/style.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/board/css/liststyle.css" rel="stylesheet" type="text/css"/>
+<link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet" type="text/css">
+<link href="<c:url value="/resources/css/liststyle.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <section>
-<b>자료실(전체 게시글:${count})</b>
+<b>자료실(전체 게시글:${listcount})</b>
 <table class="listwritebutton">
 	<tr>
 		<td>
@@ -20,8 +20,8 @@
 		</td>
 	</tr>
 </table>
-<c:if test="${count == 0}">
-<table  class="listtable">
+<c:if test="${listcount == 0}">
+<table class="listtable">
 	<tr>
 		<td>
 			자료실에 저장된 게시글이 없습니다.
@@ -30,7 +30,7 @@
 </table>
 </c:if>
 
-<c:if test="${count > 0}">
+<c:if test="${listcount > 0}">
 <table class="listtable">
 	<tr>
 		<th id="num">번 호</th>
@@ -49,18 +49,18 @@
 		</td>
 		<td class="titletd">
 			<c:if test="${article.depth > 0}">
-				<img src="${pageContext.request.contextPath}/board/images/level.gif"
+				<img src="/resources/images/level.gif"/>
 					width="${5 * article.depth}">
-				<img src="${pageContext.request.contextPath}/board/images/re.gif">
+				<img src="/resources/images/re.gif"/>
 			</c:if>
 			<c:if test="${article.depth == 0}">
-				<img src="${pageContext.request.contextPath}/board/images/level.gif"
-					width="${5 * article.depth}">
+				<img src="/resources/images/level.gif"
+				 width="${5 * article.depth}">
 			</c:if>
 			<a href="<c:url value="/board/content/${article.num}"/>">
 				${article.subject}</a>
 			<c:if test="${article.readcount >= 20}">
-				<img src="${pageContext.request.contextPath}/board/images/hot.gif">
+				<img src="/resources/images/hot.gif"/>
 			</c:if>
 		</td>
 		<td>

@@ -48,6 +48,8 @@
 	   			  <constructor-arg ref="sqlSessionFactory"/>
 	   	</bean>
 	   	
+	   	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	   	
 	   	<context:component-scan base-package="board.controller"/>
 	    <context:component-scan base-package="board.domain" />
 	    <context:component-scan base-package="board.dao" />

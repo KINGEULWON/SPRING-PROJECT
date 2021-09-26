@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService{
 		map.put("start", start);
 		map.put("end", end);
 		
-		return boardDao.list(map);
+		return boardDao.getArticles(map);
 	}
 	
 	@Override

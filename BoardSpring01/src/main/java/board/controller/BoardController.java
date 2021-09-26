@@ -26,13 +26,16 @@ import board.service.BoardService;
 @Controller
 @SessionAttributes("BoardVO")
 public class BoardController {
+	
 	private BoardService boardService;
+	
+	private static final String FILE_PATH = "C:\\uploadtest\\upload\\";
 	
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
 	}
 		
-	private static final String FILE_PATH = "C:\\uploadtest\\upload\\";
+	
 	
 	@RequestMapping(value="/board/list")
 	public String list(@RequestParam(name="pageNum", required=false, defaultValue="0")int pageNum ,
@@ -47,21 +50,21 @@ public class BoardController {
 			
 			int startRow = (currentPage - 1) * pageSize + 1;
 			int endRow = currentPage * pageSize;	//한 페이지의 마지막 글 번호
-			int count = 0;
+			int listcount = 0;
 			int number = 0;
 			List<BoardVO> articleList = null;
-			count = boardService.listCount();	// 전체 글 개수
-			if(count > 0) {
+			listcount = boardService.listCount();	// 전체 글 개수
+			if(listcount > 0) {
 				articleList = boardService.list(startRow, endRow);
 			} else { 
 				articleList = Collections.emptyList();
 			}
-			number = count - (currentPage - 1) * pageSize;	//글 목록에 표시할 글 번호
+			number = listcount - (currentPage - 1) * pageSize;	//글 목록에 표시할 글 번호
 			
 			model.addAttribute("currentPage",new Integer(currentPage));
 			model.addAttribute("startRow",new Integer(startRow));
 			model.addAttribute("endRow",new Integer(endRow));
-			model.addAttribute("count",new Integer(count));
+			model.addAttribute("count",new Integer(listcount));
 			model.addAttribute("pageSize",new Integer(pageSize)); 
 			model.addAttribute("number",new Integer(number));
 			model.addAttribute("articleList",articleList);
