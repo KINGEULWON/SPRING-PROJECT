@@ -27,12 +27,13 @@ public class MemberServiceImpl implements MemberService{
 		if(result) { //true면 세션 등록
 			MemberVO vo2 = infoMember(vo);
 			session.setAttribute("memberNum", vo2.getMemberNum());
-			session.setAttribute("id", vo2.getId());
-			session.setAttribute("name", vo2.getName());
+			session.setAttribute("id", vo2.getUserId());
+			session.setAttribute("name", vo2.getUserName());
 		}
 		return result;
 	}
 	
+	//로그아웃 
 	@Override
 	public void logout(HttpSession session) {
 		session.invalidate();

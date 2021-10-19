@@ -4,41 +4,41 @@ import java.sql.Date;
 
 public class MemberVO {
 	private int memberNum;
-	private String id;
-	private String password;
-	private String name;
-	private String email;
+	private String userId;
+	private String userPw;
+	private String userName;
+	private String userEmail;
 	private Date createAccount;
-	
+
 	public int getMemberNum() {
 		return memberNum;
 	}
 	public void setMemberNum(int memberNum) {
 		this.memberNum = memberNum;
 	}
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getPassword() {
-		return password;
+	public String getUserPw() {
+		return userPw;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
 	}
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public String getEmail() {
-		return email;
+	public String getUserEmail() {
+		return userEmail;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	public Date getCreateAccount() {
 		return createAccount;
@@ -47,9 +47,4 @@ public class MemberVO {
 		this.createAccount = createAccount;
 	}
 	
-	@Override
-	public String toString() {
-		return "MemberVO [memberNum=" + memberNum + ", id=" + id + ", password=" + password + ", name=" + name
-				+ ", email=" + email + ", createAccount=" + createAccount + "]";
-	}
 }
