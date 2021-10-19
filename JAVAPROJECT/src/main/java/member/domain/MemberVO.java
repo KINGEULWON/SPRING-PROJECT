@@ -1,6 +1,6 @@
 package member.domain;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MemberVO {
 	private int memberNum;
@@ -8,8 +8,8 @@ public class MemberVO {
 	private String userPw;
 	private String userName;
 	private String userEmail;
-	private Date createAccount;
-
+	private Timestamp createAccount;
+	
 	public int getMemberNum() {
 		return memberNum;
 	}
@@ -40,11 +40,18 @@ public class MemberVO {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public Date getCreateAccount() {
+	public Timestamp getCreateAccount() {
 		return createAccount;
 	}
-	public void setCreateAccount(Date createAccount) {
+	public void setCreateAccount(Timestamp createAccount) {
 		this.createAccount = createAccount;
 	}
+	@Override
+	public String toString() {
+		return "MemberVO [memberNum=" + memberNum + ", userId=" + userId + ", userPw=" + userPw + ", userName="
+				+ userName + ", userEmail=" + userEmail + ", createAccount=" + createAccount + "]";
+	}
+	
 	
 }
+	

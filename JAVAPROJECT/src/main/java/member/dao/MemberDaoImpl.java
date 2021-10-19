@@ -1,6 +1,6 @@
 package member.dao;
 
-import javax.servlet.http.HttpSession;
+
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +14,11 @@ public class MemberDaoImpl implements MemberDao{
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-	//로그인 정보
+	//회원 가입
 	@Override
-	public MemberVO infoMember(MemberVO vo) {
-		return sqlSessionTemplate.selectOne("member.infoMember", vo);  
+	public void register(MemberVO vo) throws Exception{
+		sqlSessionTemplate.insert("/member/register", vo);
 	}
 	
-	//로그 아웃
-	@Override
-	public void logout(HttpSession session) {
-	}
 	
-	//로그인체크
-	@Override
-	public boolean loginCheck(MemberVO vo) {
-		String name = sqlSessionTemplate.selectOne("member.loginCheck", vo);
-		return (name == null) ? false : true;
-	}
 }
