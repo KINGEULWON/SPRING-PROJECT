@@ -4,6 +4,22 @@ import member.domain.MemberVO;
 
 public interface MemberDao {
 	
-	//íšŒì›ê°€ì…
+	//·Î±×ÀÎ
+	public MemberVO login(MemberVO vo) throws Exception;
+	
+	//È¸¿ø°¡ÀÔ
 	public void register(MemberVO vo) throws Exception;
+	
+	//Á¤º¸ ¼öÁ¤
+	public void memberUpdate(MemberVO vo) throws Exception;
+	
+	//È¸¿ø Å»Åğ
+	public void memberDelete(MemberVO vo) throws Exception;
+	
+	//¾ÆÀÌµğ Áßº¹Ã¼Å©
+	public int idChk(MemberVO vo) throws Exception;
+	
+	//ºñ¹Ğ¹øÈ£ Ã¼Å©
+	public int pwChk(MemberVO vo) throws Exception;
+	
 }

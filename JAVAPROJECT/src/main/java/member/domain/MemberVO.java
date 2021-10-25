@@ -3,55 +3,80 @@ package member.domain;
 import java.sql.Timestamp;
 
 public class MemberVO {
-	private int memberNum;
-	private String userId;
-	private String userPw;
-	private String userName;
-	private String userEmail;
+	
+	private int member_num;
+	private String id;
+	private String password;
+	private String name;
+	private String email;
 	private Timestamp createAccount;
 	
-	public int getMemberNum() {
-		return memberNum;
+	
+	public int getMember_num() {
+		return member_num;
 	}
-	public void setMemberNum(int memberNum) {
-		this.memberNum = memberNum;
+
+
+	public void setMember_num(int member_num) {
+		this.member_num = member_num;
 	}
-	public String getUserId() {
-		return userId;
+
+
+	public String getId() {
+		return id;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getUserPw() {
-		return userPw;
+
+	
+	public String getPassword() {
+		return password;
 	}
-	public void setUserPw(String userPw) {
-		this.userPw = userPw;
+
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getUserName() {
-		return userName;
+
+
+	public String getName() {
+		return name;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getUserEmail() {
-		return userEmail;
+
+
+	public String getEmail() {
+		return email;
 	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
+
 	public Timestamp getCreateAccount() {
 		return createAccount;
 	}
+
+
 	public void setCreateAccount(Timestamp createAccount) {
 		this.createAccount = createAccount;
 	}
+
+
 	@Override
 	public String toString() {
-		return "MemberVO [memberNum=" + memberNum + ", userId=" + userId + ", userPw=" + userPw + ", userName="
-				+ userName + ", userEmail=" + userEmail + ", createAccount=" + createAccount + "]";
+		return "MemberVO [member_num=" + member_num + ", id=" + id + ", password=" + password + ", name=" + name
+				+ ", email=" + email + ", createAccount=" + createAccount + "]";
 	}
-	
-	
+
 }
 	

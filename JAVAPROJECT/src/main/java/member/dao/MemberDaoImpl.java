@@ -14,11 +14,40 @@ public class MemberDaoImpl implements MemberDao{
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-	//íšŒì› ê°€ì…
+	//È¸¿ø°¡ÀÔ
 	@Override
 	public void register(MemberVO vo) throws Exception{
-		sqlSessionTemplate.insert("/member/register", vo);
+		sqlSessionTemplate.insert("register", vo);
 	}
 	
+	//·Î±×ÀÎ
+	@Override
+	public MemberVO login(MemberVO vo) throws Exception{
+		return sqlSessionTemplate.selectOne("login", vo);
+	}
 	
+	//¼öÁ¤
+	@Override
+	public void memberUpdate(MemberVO vo) throws Exception{
+		sqlSessionTemplate.update("memberUpdate", vo);
+	}
+	
+	//»èÁ¦
+	@Override
+	public void memberDelete(MemberVO vo) throws Exception{
+		sqlSessionTemplate.delete("memberDelete", vo);
+	}
+	
+	//¾ÆÀÌµğ Áßº¹ Ã¼Å©
+	public int idChk(MemberVO vo) throws Exception{
+		int result = sqlSessionTemplate.selectOne("idChk", vo);
+		return result;
+	}
+	
+	//ºñ¹ø Ã¼Å©
+	@Override
+	public int pwChk(MemberVO vo) throws Exception{
+		int result = sqlSessionTemplate.selectOne("pwChk", vo);
+		return result;
+	}
 }
