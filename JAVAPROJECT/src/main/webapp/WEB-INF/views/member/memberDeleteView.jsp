@@ -7,35 +7,36 @@
 		<title>회원탈퇴</title>
 	</head>
 	<script type="text/javascript">
-	$(document).ready(function(){
-		// 취소
-		$(".cencle").on("click", function(){		
-			location.href = "/";				    
-		})
-		$("#submit").on("click", function(){
-			if($("#password").val()==""){
-				alert("비밀번호를 입력해주세요.");
-				$("#password").focus();
-				return false;
-			}
-		$.ajax({
-			url : "/member/pwChk",
-			type : "POST",
-			dataType : "json",
-			data : $("#delForm").serializeArray(),
-			success: function(data){					
-		    	if(data==0){
-					alert("비빌번호가 틀렸습니다.");
-					return;
-				}else{
-				if(confirm("정말 회원탈퇴를 하시겠습니까?")){
-					$("#delForm").submit();
-					}					
-				  }
+		$(document).ready(function(){
+			// 취소
+			$(".cencle").on("click", function(){			
+				location.href = "/";					    
+			})
+			$("#submit").on("click", function(){
+				if($("#password").val()==""){
+					alert("비밀번호를 입력해주세요.");
+					$("#password").focus();
+					return false;
 				}
-			})		
-		});						
-	})
+				$.ajax({
+					url : "/member/pwChk",
+					type : "POST",
+					dataType : "json",
+					data : $("#delForm").serializeArray(),
+					success: function(data){
+						
+						if(data==0){
+							alert("비밀번호가 틀렸습니다.");
+							return;
+						}else{
+							if(confirm("정말 회원탈퇴를 하시겠습니까?")){
+								$("#delForm").submit();
+							}					
+						}
+					}
+				})		
+			});	
+		})
 	</script>
 	<body>
 		<section id="container">
@@ -52,16 +53,16 @@
 					<label class="control-label" for="password">패스워드</label>
 					<input class="form-control" type="password" id="password" name="password" />
 				</div>
-				<div class="form-group has-feedback">
-					<button class="btn btn-success" type="submit" id="submit">회원탈퇴</button>
-					<button class="cencle btn btn-danger" type="button">취소</button>
-				</div>
 			</form>
+			<div class="form-group has-feedback">
+				<button class="btn btn-success" type="button" id="submit">회원탈퇴</button>
+				<button class="cencle btn btn-danger" type="button">취소</button>
+			</div>
 			<div>
 				<c:if test="${msg == false}">
 					비밀번호가 맞지 않습니다.
 				</c:if>
 			</div>
-		</section>		
+		</section>	
 	</body>
 </html>
