@@ -1,5 +1,6 @@
 package member.controller;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -128,4 +130,22 @@ public class MemberController {
 		return result;
 	}
 	
+	//아이디 찾기 페이지 
+	@RequestMapping(value="/findIdForm")
+	public String findIdView() {
+		return "member/findId";
+	}
+	
+	//아이디 찾기
+	@RequestMapping(value="/findId", method = RequestMethod.POST)
+	public String findId(MemberVO vo, Model md) throws Exception{
+		MemberVO user = service.findId(vo);	
+		if(user == null) {
+			md.addAttribute("check",1);
+		}else {
+			md.addAttribute("check",0);
+			md.addAttribute("id",user.getId());
+		}
+		return "member/findId";
+	}
 }

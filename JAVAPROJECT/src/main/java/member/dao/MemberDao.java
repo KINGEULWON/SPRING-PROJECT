@@ -22,4 +22,6 @@ public interface MemberDao {
 	//비밀번호 체크
 	public int pwChk(MemberVO vo) throws Exception;
 	
+	//아이디 찾기
+	public MemberVO findId(MemberVO vo) throws Exception;
 }

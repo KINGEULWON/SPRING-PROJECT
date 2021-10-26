@@ -46,4 +46,9 @@ public class MemberServiceImpl implements MemberService{
 		int result = memberDao.pwChk(vo);
 		return result;
 	}
+	
+	@Override 
+	public MemberVO findId(MemberVO vo) throws Exception{
+		return memberDao.findId(vo);
+	}
 }

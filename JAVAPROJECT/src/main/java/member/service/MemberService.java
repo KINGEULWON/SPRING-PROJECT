@@ -1,5 +1,6 @@
 package member.service;
 
+
 import member.domain.MemberVO;
 
 public interface MemberService {
@@ -15,4 +16,6 @@ public interface MemberService {
 	public int idChk(MemberVO vo) throws Exception;
 	
 	public int pwChk(MemberVO vo) throws Exception;
+	
+	public MemberVO findId(MemberVO vo) throws Exception;
 } 

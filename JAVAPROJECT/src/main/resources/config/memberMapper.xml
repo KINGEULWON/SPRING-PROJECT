@@ -53,4 +53,10 @@
 		SELECT COUNT(*) FROM MEMBER
 		WHERE ID = #{id} AND PASSWORD = #{password}
 	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" resultType="memberVO">
+		SELECT * FROM MEMBER
+		WHERE NAME = #{name} AND EMAIL = #{email}
+	</select>
 </mapper>

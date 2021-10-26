@@ -50,4 +50,9 @@ public class MemberDaoImpl implements MemberDao{
 		int result = sqlSessionTemplate.selectOne("pwChk", vo);
 		return result;
 	}
+	
+	//아이디 찾기
+	public MemberVO findId(MemberVO vo) throws Exception{
+		return sqlSessionTemplate.selectOne("findId", vo);
+	}
 }

@@ -33,6 +33,10 @@
 				<input type="password" id="password" name="password">
 			</div>
 			<div>
+				아이디를 잊으셨나요?<a href="/member/findIdForm">아이디 찾기</a><br>
+				비밀번호를 잊으셨나요?<a href="/member/findPw">비밀번호 찾기</a>
+			</div>
+			<div>
 				<button type="submit">로그인</button>
 				<button id="registerBtn" type="button">회원가입</button>
 			</div>
