@@ -76,7 +76,7 @@ public class MemberController {
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception{
 		session.invalidate();
-		return "redirect:/";
+		return "home";
 	}
 	
 	//정보수정 get
@@ -142,10 +142,11 @@ public class MemberController {
 		MemberVO user = service.findId(vo);	
 		if(user == null) {
 			md.addAttribute("check",1);
+			return "member/findId";
 		}else {
 			md.addAttribute("check",0);
 			md.addAttribute("id",user.getId());
 		}
-		return "member/findId";
+		return "member/findIdResult";
 	}
 }

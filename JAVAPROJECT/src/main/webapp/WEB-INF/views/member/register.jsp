@@ -60,7 +60,7 @@
 					<input class="form-control" type="text" id="id" name="id" /><button class="idChk" type="button" id="idChk" onclick="fn_idChk();" value="N">중복확인</button>
 				</div>
 				<div>
-					<label class="control-label" for="password">패스워드</label>
+					<label class="control-label" for="password">비밀번호</label>
 					<input class="form-control" type="password" id="password" name="password" />
 				</div>
 				<div>
@@ -73,7 +73,7 @@
 				</div>
 				<div>
 					<input type="button" value="이전" onClick="document.location.href='<c:url value="/"/>'">
-					<button class="btn btn-success" type="submit" id="submit">회원가입</button>			
+					<button class="btn-success" type="submit" id="submit">회원가입</button>			
 				</div>
 			</form>
 		</section>		

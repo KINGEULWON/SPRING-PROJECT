@@ -12,6 +12,9 @@
 			$(".cencle").on("click", function(){			
 				location.href = "/";					    
 			})
+			$("#logoutBtn").on("click", function(){
+			location.href="logout";
+			})
 			$("#submit").on("click", function(){
 				if($("#password").val()==""){
 					alert("비밀번호를 입력해주세요.");
@@ -41,22 +44,24 @@
 	<body>
 		<section id="container">
 			<form action="/member/memberDelete" method="post" id="delForm">
-				<div class="form-group has-feedback">
+				<input type="button" value="TASKWITH" onClick="document.location.href='<c:url value="/"/>'">
+				<button id="logoutBtn" type="button">로그아웃</button>
+				<div class="form-group">
 					<label class="control-label" for="id">아이디</label>
 					<input class="form-control" type="text" id="id" name="id" value="${member.id}" readonly="readonly"/>
 				</div>
-				<div class="form-group has-feedback">
+				<div class="form-group">
 					<label class="control-label" for="name">성명</label>
 					<input class="form-control" type="text" id="name" name="name" value="${member.name}" readonly="readonly"/>
 				</div>
-				<div class="form-group has-feedback">
+				<div class="form-group">
 					<label class="control-label" for="password">패스워드</label>
 					<input class="form-control" type="password" id="password" name="password" />
 				</div>
 			</form>
-			<div class="form-group has-feedback">
-				<button class="btn btn-success" type="button" id="submit">회원탈퇴</button>
-				<button class="cencle btn btn-danger" type="button">취소</button>
+			<div class="form-group has">
+				<button class="btn-success" type="button" id="submit">회원탈퇴</button>
+				<button class="cencle btn" type="button">취소</button>
 			</div>
 			<div>
 				<c:if test="${msg == false}">

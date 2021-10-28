@@ -8,21 +8,30 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>아이디찾기</title>
 </head>
+<script type="text/javascript">
+		$(document).ready(function(){
+			// 취소
+			$(".cencle").on("click", function(){			
+				location.href = "/";					    
+			})			
+		})
+</script>
 <body>
 <form method="post" class="form-signin" action="/member/findId" name="findform">
+<input type="button" value="TASKWITH" onClick="document.location.href='<c:url value="/"/>'">
 		<div class="form-label-group">
-			<input type="text" id="name" name="name" class="form-control"/>
 			<label for="name">이름</label>
+			<input type="text" id="name" name="name" class="form-control"/>
 		</div>
 		
 		<div class="form-label-group">
-			<input type="text" id="email" name="email" class="form-control"/>
 			<label for="email">email</label>
+			<input type="text" id="email" name="email" class="form-control"/>
 		</div>
 
 		<div class="form-label-group">
-			<input class="btn btn-lg btn-secondary btn-block text-uppercase"
-				type="submit" value="check">
+			<button class="cencle btn" type="button">이전</button>
+			<input class="btn check" type="submit" value="아이디 찾기">
 		</div>
 
 		<c:if test="${check == 1}">
@@ -32,11 +41,9 @@
 			</script>
 			<label>일치하는 정보가 존재하지 않습니다.</label>
 		</c:if>
-
 		<c:if test="${check == 0 }">
-		<label>찾으시는 아이디는 '${id}' 입니다.</label>
 		<div class="form-label-group">
-				<input class="btn btn-lg btn-secondary btn-block text-uppercase"
+				<input class="btn check"
 					type="button" value="OK" onclick="closethewindow()">
 			</div>
 		</c:if>
