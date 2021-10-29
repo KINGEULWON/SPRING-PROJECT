@@ -76,7 +76,7 @@ public class MemberController {
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception{
 		session.invalidate();
-		return "home";
+		return "member/home";
 	}
 	
 	//정보수정 get
@@ -87,10 +87,17 @@ public class MemberController {
 	
 	//정보수정 post
 	@RequestMapping(value="/memberUpdate", method = RequestMethod.POST)
-	public String registerUpdate(MemberVO vo, HttpSession session) throws Exception{
+	public String memberUpdate(MemberVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String sessionPw = member.getPassword();
+		String voPw = vo.getPassword();
+		if(!(sessionPw.equals(voPw))) {
+			rttr.addFlashAttribute("msg",false);
+			return "redirect:/member/memberUpdateView";
+		}
 		service.memberUpdate(vo);
 		session.invalidate();
-		return "redirect:/";
+		return "member/memberUpdateDone";
 	}
 	
 	//회원 탈퇴 get
@@ -111,7 +118,7 @@ public class MemberController {
 		}
 		service.memberDelete(vo);
 		session.invalidate();
-		return "redirect:/";
+		return "member/memberDeleteDone";
 	}
 	
 	//아이디 중복체크

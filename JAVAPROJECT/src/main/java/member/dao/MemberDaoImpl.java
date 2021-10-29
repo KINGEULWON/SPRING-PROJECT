@@ -52,7 +52,9 @@ public class MemberDaoImpl implements MemberDao{
 	}
 	
 	//아이디 찾기
+	@Override
 	public MemberVO findId(MemberVO vo) throws Exception{
 		return sqlSessionTemplate.selectOne("findId", vo);
 	}
+	
 }

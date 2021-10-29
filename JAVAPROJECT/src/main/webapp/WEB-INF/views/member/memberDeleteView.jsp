@@ -20,14 +20,13 @@
 					alert("비밀번호를 입력해주세요.");
 					$("#password").focus();
 					return false;
-				}
-				$.ajax({
+				}	
+					$.ajax({
 					url : "/member/pwChk",
 					type : "POST",
 					dataType : "json",
 					data : $("#delForm").serializeArray(),
-					success: function(data){
-						
+					success: function(data){			
 						if(data==0){
 							alert("비밀번호가 틀렸습니다.");
 							return;

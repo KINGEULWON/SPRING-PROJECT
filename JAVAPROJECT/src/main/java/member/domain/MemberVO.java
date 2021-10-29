@@ -10,6 +10,7 @@ public class MemberVO {
 	private String name;
 	private String email;
 	private Timestamp createAccount;
+	private String pw2;
 	
 	
 	public int getMember_num() {
@@ -39,6 +40,16 @@ public class MemberVO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	
+	public String getPw2() {
+		return pw2;
+	}
+
+
+	public void setPw2(String pw2) {
+		this.pw2 = pw2;
 	}
 
 

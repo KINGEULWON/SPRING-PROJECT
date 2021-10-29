@@ -29,9 +29,9 @@
 	</insert>
 	
 	<!-- 정보 수정 -->
-	<update id="memberUpdate">
+	<update id="memberUpdate" parameterType="memberVO">
 		UPDATE MEMBER SET
-		PASSWORD = #{password}
+		PASSWORD = #{pw2}
 		WHERE ID = #{id} 
 	</update>
 	
