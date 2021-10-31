@@ -24,4 +24,7 @@ public interface MemberService {
 	
 	//아이디 찾기
 	public MemberVO findId(MemberVO vo) throws Exception;
+	
+	//비번 찾기
+	public MemberVO findPw(MemberVO vo) throws Exception;
 } 

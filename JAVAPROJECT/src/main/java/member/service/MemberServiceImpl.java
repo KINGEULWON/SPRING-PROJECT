@@ -52,5 +52,10 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO findId(MemberVO vo) throws Exception{
 		return memberDao.findId(vo);
 	}
+	//비번 찾기
+	@Override
+	public MemberVO findPw(MemberVO vo) throws Exception{
+		return memberDao.finePw(vo);
+	}
 
 }

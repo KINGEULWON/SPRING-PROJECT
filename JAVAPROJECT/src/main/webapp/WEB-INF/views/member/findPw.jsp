@@ -25,26 +25,24 @@
 		<div class="container-fluid p-5 text-center">
      	  <div class="card login-form border-0">
            <div class="card-body">
-				<form method="post" class="form-signin" action="/member/findId" name="findform">
-			<label for="name">이름</label><br>
-			<input type="text" id="name" name="name" class="form-control"/><br>
+			<form method="post" class="form-signin" action="/member/findPw" name="findform">
+				<label for="id">아이디</label><br>
+				<input type="text" id="id" name="id" class="form-control"/><br>
 
-			<label for="email">이메일</label><br>
-			<input type="text" id="email" name="email" class="form-control"/><br><br>
+				<label for="email">이메일</label><br>
+				<input type="text" id="email" name="email" class="form-control"/><br><br>
 
-			<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">이전</button>
-			<button id="submit" class="btn" name="Submit" value="아이디 찾기" type="submit" th:text="register">아이디 찾기</button>
+				<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">이전</button>
+				<button id="submit" class="btn" name="Submit" value="비밀번호 찾기" type="submit" th:text="register">비번 찾기</button>
+
 
 		<c:if test="${check == 1}">
 			<script>
-				opener.document.findform.name.value = "";
+				opener.document.findform.id.value = "";
 				opener.document.findform.email.value = "";
 			</script>
 			<label>일치하는 정보가 존재하지 않습니다.</label>
 		</c:if>
-			</form>
-			</div>
-         </div>
-       </div>
-	</body>
+	</form>
+</body>
 </html>

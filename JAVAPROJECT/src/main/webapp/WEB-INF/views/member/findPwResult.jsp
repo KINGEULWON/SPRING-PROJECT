@@ -11,7 +11,7 @@
 	<title>TASKWITH</title>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-	<script type="text/javascript">
+<script type="text/javascript">
 		$(document).ready(function(){
 			// 취소
 			$(".cencle").on("click", function(){			
@@ -22,16 +22,16 @@
 			})
 			
 		})
-	</script>
+</script>
 	<body>		
 		<%@ include file="../include/loginMenu.jsp" %>
-		<div class="container-fluid p-5 text-center">
-     	  <div class="card login-form border-0">
-           <div class="card-body">
-				<label>회원님의 아이디는 "${id}" 입니다.</label>
-				<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">로그인   하러가기</button>
+			<div class="container-fluid p-5 text-center">
+     		  <div class="card login-form border-0">
+          		 <div class="card-body">
+					<label>회원님의 비밀번호는 "${password}" 입니다.</label>
+					<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">로그인   하러가기</button>
 				</div>
-       		  </div>
-     	  </div>
+        	 </div>
+       	   </div>
 	</body>
 </html>

@@ -1,12 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title>메인</title>
+	<meta name="viewport" content="width=device-width">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet" type="text/css">
+	<title>TASKWITH</title>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <script type="text/javascript">
 		$(document).ready(function(){
@@ -52,30 +56,36 @@
 		}
 	</script>
 	<body>
-		<section id="container">
-			<form method="post" action="<c:url value="/member/register"/>">
-			<input type="button" value="TASKWITH" onClick="document.location.href='<c:url value="/"/>'">
-				<div>
-					<label class="control-label" for="id">아이디</label>
-					<input class="form-control" type="text" id="id" name="id" /><button class="idChk" type="button" id="idChk" onclick="fn_idChk();" value="N">중복확인</button>
-				</div>
-				<div>
-					<label class="control-label" for="password">비밀번호</label>
-					<input class="form-control" type="password" id="password" name="password" />
-				</div>
-				<div>
-					<label class="control-label" for="name">성명</label>
-					<input class="form-control" type="text" id="name" name="name" />
-				</div>
-				<div>
-					<label class="controll-label" for="email">이메일</label>
-					<input class="form-control" type="text" id="email" name="email"/>
-				</div>
-				<div>
-					<input type="button" value="이전" onClick="document.location.href='<c:url value="/"/>'">
-					<button class="btn-success" type="submit" id="submit">회원가입</button>			
-				</div>
-			</form>
-		</section>		
+	<%@ include file="../include/loginMenu.jsp" %>
+		<div class="container-fluid p-5 text-center">
+     	  <div class="card login-form border-0">
+           <div class="card-body">
+					<form method="post" action="<c:url value="/member/register"/>">
+					<table align="center">
+						<tr>
+							<td><label class="control-label" for="id">아이디</label></td>
+							<td><input class="form-control" type="text" id="id" name="id" style="width:200px; height:30px;"/><br></td>
+							<td><button class="idChk" type="button" id="idChk" onclick="fn_idChk();" value="N" style="float: left;">중복확인</button></td>
+						</tr>
+						<tr>
+						  <td><label class="control-label" for="password">비밀번호</label></td>
+					  	  <td><input class="form-control" type="password" id="password" name="password" /><br></td>
+						</tr>
+						  <tr>
+						   <td><label class="control-label" for="name">성명</label></td>
+						   <td><input class="form-control" type="text" id="name" name="name" /><br></td>
+						  </tr>
+						<tr>
+						   <td><label class="controll-label" for="email">이메일</label></td>
+						   <td><input class="form-control" type="text" id="email" name="email"/></td>
+						</tr>
+					</table>
+						<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">이전</button>
+						<button id="submit" class="btn" name="Submit" value="회원가입" type="submit" th:text="register">회원가입</button>
+					</div>
+				</form>
+			</div>
+         </div>
+       </div>	
 	</body>
 </html>

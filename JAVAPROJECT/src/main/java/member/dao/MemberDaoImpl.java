@@ -57,4 +57,9 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSessionTemplate.selectOne("findId", vo);
 	}
 	
+	//비번 찾기
+	@Override
+	public MemberVO finePw(MemberVO vo) throws Exception{
+		return sqlSessionTemplate.selectOne("findPw", vo);
+	}
 }

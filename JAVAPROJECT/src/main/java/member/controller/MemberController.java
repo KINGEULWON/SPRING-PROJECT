@@ -156,4 +156,24 @@ public class MemberController {
 		}
 		return "member/findIdResult";
 	}
+	
+	//비밀번호 찾기 페이지 
+		@RequestMapping(value="/findPwForm")
+		public String findPwView() {
+			return "member/findPw";
+		}
+		
+	//비번 찾기
+	@RequestMapping(value="/findPw", method = RequestMethod.POST)
+	public String findPw(MemberVO vo, Model md) throws Exception{
+		MemberVO user = service.findPw(vo);
+		if(user == null) {
+			md.addAttribute("check",1);
+			return "/member/findPw";
+		}else {
+			md.addAttribute("check", 0);
+			md.addAttribute("password",user.getPassword());
+		}
+		return "member/findPwResult";
+	}
 }

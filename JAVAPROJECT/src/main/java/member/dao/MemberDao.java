@@ -25,4 +25,7 @@ public interface MemberDao {
 	//아이디 찾기
 	public MemberVO findId(MemberVO vo) throws Exception;
 	
+	//비번 찾기
+	public MemberVO finePw(MemberVO vo) throws Exception;
+	
 }
