@@ -26,21 +26,24 @@
      	  <div class="card login-form border-0">
            <div class="card-body">
 			<form method="post" class="form-signin" action="/member/findPw" name="findform">
-				<label for="id">아이디</label><br>
-				<input type="text" id="id" name="id" class="form-control"/><br>
-
-				<label for="email">이메일</label><br>
-				<input type="text" id="email" name="email" class="form-control"/><br><br>
-
-				<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">이전</button>
-				<button id="submit" class="btn" name="Submit" value="비밀번호 찾기" type="submit" th:text="register">비번 찾기</button>
-
-
+			<table align="center">
+			   <tr>	
+				<td><label for="id" style="font-size:25px;">아이디</label></td>
+				<td><input type="text" id="id" name="id" class="form-control" style="width:190px; height:25px;"/><br></td>
+			   </tr>	
+			   <tr>		   
+				<td><label for="email" style="font-size:25px;">이메일</label></td>
+				<td><input type="text" id="email" name="email" class="form-control" style="width:190px; height:25px;"/><br></td>
+			   </tr>
+			</table>
+			<br>
+			<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">이전</button>
+			<button id="submit" class="btn" name="Submit" value="비밀번호 찾기" type="submit" th:text="register">비번 찾기</button>
 		<c:if test="${check == 1}">
 			<script>
 				opener.document.findform.id.value = "";
 				opener.document.findform.email.value = "";
-			</script>
+			</script><br><br>
 			<label>일치하는 정보가 존재하지 않습니다.</label>
 		</c:if>
 	</form>

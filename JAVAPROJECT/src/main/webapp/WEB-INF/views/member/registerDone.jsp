@@ -24,7 +24,7 @@
     <div class="container-fluid p-5 text-center">
        <div class="card login-form border-0">
            <div class="card-body">
-			<label>회원님의 정보가 정상적으로 변경되었습니다.</label>        
+			<label>회원가입에 성공하셨습니다!.</label>        
 	        <button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">로그인 하기</button>
            </div>
         </div>

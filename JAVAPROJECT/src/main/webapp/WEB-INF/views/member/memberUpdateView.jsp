@@ -41,9 +41,6 @@
 					alert("새 비밀번호를 입력해주세요.");
 					$("#pw2").focus();
 					return false;
-				}else if($.trim($("#pw").val()) !== $("#pw").val()){
-					alert("공백은 입력이 불가능합니다.");
-					return false;
 				}
 				$.ajax({
 					url : "/member/pwChk",
@@ -70,29 +67,42 @@
      	  <div class="card login-form border-0">
            <div class="card-body">
 			  <form action="/member/memberUpdate" method="post" id="updateForm">
-
-					<label class="control-label" for="id">아이디</label>
-					<input class="form-control" type="text" id="id" name="id" value="${member.id}" readonly="readonly"/>
-
-					<label class="control-label" for="name">이름</label>
-					<input class="form-control" type="text" id="name" name="name" value="${member.name}" readonly="readonly"/>
-
-					<label class="control-label" for="email">이메일</label>
-					<input class="form-control" type="text" id="email" name="email" value="${member.email}" readonly="readonly"/>
-
-					<label class="control-label" for="password">이전 비밀번호</label>
-					<input class="form-control" type="password" id="password" name="password" />
-
-					<label class="control-label" for="pw">새 비밀번호</label>
-					<input class="form-control" type="password" id="pw" name="pw" />
-
-					<label class="control-label" for="pw2">새 비밀번호 확인</label>
-					<input class="form-control" type="password" id="pw2" name="pw2" />		
+			  <table align="center">
+			  	<tr>
+				  <td><label class="control-label" for="id" style="font-size:25px;">아이디</label></td>
+				  <td><input class="form-control" type="text" id="id" name="id" value="${member.id}" readonly="readonly" style="width:190px; height:25px;"/><br></td>
+				</tr>
+				<tr>
+				  <td><label class="control-label" for="name" style="font-size:25px;">이름</label></td>
+				  <td><input class="form-control" type="text" id="name" name="name" value="${member.name}" readonly="readonly" style="width:190px; height:25px;"/><br></td>
+                </tr>
+                <tr>
+				  <td><label class="control-label" for="email" style="font-size:25px;">이메일</label></td>
+				  <td><input class="form-control" type="text" id="email" name="email" value="${member.email}" readonly="readonly" style="width:190px; height:25px;"/><br></td>
+				</tr>
+				<tr>
+				  <td><label class="control-label" for="password" style="font-size:25px;">이전 비밀번호</label></td>
+				  <td><input class="form-control" type="password" id="password" name="password" style="width:190px; height:25px;"/><br></td>
+				</tr>
+				<tr>
+				  <td><label class="control-label" for="pw" style="font-size:25px;">새 비밀번호</label></td>
+				  <td><input class="form-control" type="password" id="pw" name="pw" style="width:190px; height:25px;"/><br></td>
+                </tr>
+                <tr>
+				  <td><label class="control-label" for="pw2" style="font-size:25px;">새 비밀번호 확인</label></td>
+				  <td><input class="form-control" type="password" id="pw2" name="pw2" style="width:190px; height:25px;"/><br></td>
+				</tr>
+			  </table>
 			</form>		
-					<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">이전</button>		
-					<button class="btn" id="memberDeleteBtn" type="button" th:text="Regist" style="color:white;">회원탈퇴</button>											
-					<button class="btn" id="submit" name="button" value="modify" type="button" th:text="modify" >수정 완료</button>
-					
+			      <table align="center">
+			      <tr>
+			      <td>
+					<button class="btn" name="back" value="back" type="button" th:text="back" style="width:80px"; onClick="document.location.href='<c:url value="/"/>'">이전</button>		
+					<button class="btn" id="memberDeleteBtn" type="button" th:text="Regist" style="color:white; width:80px;">회원탈퇴</button>										
+                    <button class="btn" id="submit" name="button" value="modify" type="button" th:text="modify" style="width:80px;">수정 완료</button>	
+				  </td>
+				  </tr>
+				  </table>		
 		    	</div>
        		 </div>
      	  </div>

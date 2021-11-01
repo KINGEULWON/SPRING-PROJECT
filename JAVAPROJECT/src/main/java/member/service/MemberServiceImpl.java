@@ -35,12 +35,19 @@ public class MemberServiceImpl implements MemberService{
 	public void memberDelete(MemberVO vo) throws Exception{
 		memberDao.memberDelete(vo);
 	}
-	//아이디 체크
+	//아이디 중복 체크
 	@Override
 	public int idChk(MemberVO vo) throws Exception{
 		int result = memberDao.idChk(vo);
 		return result;
 	}
+	
+	@Override
+	public int emailChk(MemberVO vo) throws Exception{
+		int result = memberDao.emailChk(vo);
+		return result;
+	}
+	
 	//비번 체크
 	@Override
 	public int pwChk(MemberVO vo) throws Exception{

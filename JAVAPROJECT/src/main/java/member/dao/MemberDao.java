@@ -19,6 +19,9 @@ public interface MemberDao {
 	//아이디 중복체크
 	public int idChk(MemberVO vo) throws Exception;
 	
+	//이메일 중복체크
+	public int emailChk(MemberVO vo) throws Exception;
+	
 	//비밀번호 체크
 	public int pwChk(MemberVO vo) throws Exception;
 	

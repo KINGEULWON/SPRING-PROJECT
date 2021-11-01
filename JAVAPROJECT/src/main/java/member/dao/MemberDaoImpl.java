@@ -44,6 +44,12 @@ public class MemberDaoImpl implements MemberDao{
 		return result;
 	}
 	
+	//이메일 중복 체크
+	public int emailChk(MemberVO vo) throws Exception{
+		int result = sqlSessionTemplate.selectOne("emailChk", vo);
+		return result;
+	}
+	
 	//비번 체크
 	@Override
 	public int pwChk(MemberVO vo) throws Exception{

@@ -29,7 +29,7 @@
      		  <div class="card login-form border-0">
           		 <div class="card-body">
 					<label>회원님의 비밀번호는 "${password}" 입니다.</label>
-					<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">로그인   하러가기</button>
+					<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">로그인 하기</button>
 				</div>
         	 </div>
        	   </div>

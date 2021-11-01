@@ -16,8 +16,11 @@ public interface MemberService {
 	//회원 탈퇴
 	public void memberDelete(MemberVO vo) throws Exception;
 	
-	//아이디 체크
+	//아이디 중복 체크
 	public int idChk(MemberVO vo) throws Exception;
+	
+	//비빌번호 중복 체크
+	public int emailChk(MemberVO vo) throws Exception;
 	
 	//비번 체크
 	public int pwChk(MemberVO vo) throws Exception;

@@ -16,7 +16,8 @@
 	<insert id="register">
 		INSERT INTO MEMBER(MEMBER_NO,
 						   ID ,
-						   PASSWORD,NAME,
+						   PASSWORD,
+						   NAME,
 						   EMAIL,
 						   CREATE_AT
 					)VALUES(MEMBER_SEQ.nextval, 
@@ -46,6 +47,12 @@
 	<select id="idChk" resultType="int">
 		SELECT COUNT(*) FROM MEMBER
 		WHERE ID = #{id}
+	</select>
+	
+	<!-- 이메일 중복체크 -->
+	<select id="emailChk" resultType="int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE EMAIL = #{email}
 	</select>
 	
 	<!-- 비밀번호 체크 -->

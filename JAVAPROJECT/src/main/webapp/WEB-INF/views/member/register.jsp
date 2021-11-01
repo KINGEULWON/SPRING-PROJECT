@@ -35,7 +35,15 @@
 					$("#email").focus();
 					return false;
 				}
-			});		
+				var idChkVal = $("#idChk").val();
+				var emailChkVal = $("#emailChk").val();
+				if(idChkVal == "N" || emailChkVal == "N"){
+					alert("이메일 또는 아이디 중복확인을 해주세요.");
+				  return false;
+				}else if(idChkVal == "Y" && emailChkVal == "Y"){
+					$("#regForm").submit();
+				}
+			});		 
 		})
 		
 		function fn_idChk(){
@@ -54,35 +62,53 @@
 				}
 			})
 		}
+		
+		function fn_emailChk(){
+			$.ajax({
+				url : "/member/emailChk",
+				type : "post",
+				dataType : "json",
+				data : {"email" : $("#email").val()},
+				success : function(data){
+					if(data == 1){
+						alert("중복된 이메일입니다.");
+					}else if(data == 0){
+						$("#emailChk").attr("value", "Y");
+						alert("사용가능한 이메일입니다.");
+					}
+				}
+			})
+		}
 	</script>
 	<body>
 	<%@ include file="../include/loginMenu.jsp" %>
 		<div class="container-fluid p-5 text-center">
      	  <div class="card login-form border-0">
            <div class="card-body">
-					<form method="post" action="<c:url value="/member/register"/>">
+					<form method="post" id="regForm" action="<c:url value="/member/register"/>">
 					<table align="center">
 						<tr>
-							<td><label class="control-label" for="id">아이디</label></td>
-							<td><input class="form-control" type="text" id="id" name="id" style="width:200px; height:30px;"/><br></td>
-							<td><button class="idChk" type="button" id="idChk" onclick="fn_idChk();" value="N" style="float: left;">중복확인</button></td>
+							<td><label class="control-label" for="id" style="font-size:25px;">아이디</label></td>
+							<td><input class="form-control" type="text" id="id" name="id" style="width:190px; height:25px;"/><br></td>
+							<td><button class="idChk" type="button" id="idChk" onclick="fn_idChk();" value="N" style="height:25px; position: relative; bottom:10px;">중복확인</button></td>
 						</tr>
 						<tr>
-						  <td><label class="control-label" for="password">비밀번호</label></td>
-					  	  <td><input class="form-control" type="password" id="password" name="password" /><br></td>
+						   <td><label class="controll-label" for="email" style="font-size:25px;">이메일</label></td>
+						   <td><input class="form-control" type="text" id="email" name="email" style="width:190px; height:25px;"/><br></td>
+						   <td><button class="emailChk" type="button" id="emailChk" onclick="fn_emailChk();" value="N" style="height:25px; position: relative; bottom:10px;">중복확인</button></td>
+						</tr>
+						<tr>
+						  <td><label class="control-label" for="password" style="font-size:25px;">비밀번호</label></td>
+					  	  <td><input class="form-control" type="password" id="password" name="password" style="width:190px; height:25px;"/><br></td>
 						</tr>
 						  <tr>
-						   <td><label class="control-label" for="name">성명</label></td>
-						   <td><input class="form-control" type="text" id="name" name="name" /><br></td>
+						   <td><label class="control-label" for="name" style="font-size:25px;">성명</label></td>
+						   <td><input class="form-control" type="text" id="name" name="name" style="width:190px; height:25px;"/><br></td>
 						  </tr>
-						<tr>
-						   <td><label class="controll-label" for="email">이메일</label></td>
-						   <td><input class="form-control" type="text" id="email" name="email"/></td>
-						</tr>
 					</table>
+						<br><br>
 						<button class="btn" name="back" value="back" type="button" th:text="back" onClick="document.location.href='<c:url value="/"/>'">이전</button>
 						<button id="submit" class="btn" name="Submit" value="회원가입" type="submit" th:text="register">회원가입</button>
-					</div>
 				</form>
 			</div>
          </div>

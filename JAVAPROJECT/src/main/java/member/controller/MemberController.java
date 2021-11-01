@@ -50,7 +50,7 @@ public class MemberController {
 		}catch(Exception e) {
 			throw new RuntimeException();
 		}
-		return "redirect:/";
+		return "member/registerDone";
 	}
 	
 	
@@ -76,7 +76,7 @@ public class MemberController {
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception{
 		session.invalidate();
-		return "member/home";
+		return "redirect:/";
 	}
 	
 	//정보수정 get
@@ -126,6 +126,14 @@ public class MemberController {
 	@RequestMapping(value="/idChk", method = RequestMethod.POST)
 	public int idChk(MemberVO vo) throws Exception{
 		int result = service.idChk(vo);
+		return result;
+	}
+	
+	//이메일 중복체크
+	@ResponseBody
+	@RequestMapping(value="/emailChk", method = RequestMethod.POST)
+	public int emailChk(MemberVO vo) throws Exception{
+		int result = service.emailChk(vo);
 		return result;
 	}
 	

@@ -22,8 +22,50 @@
 		})
 		$("#memberUpdateBtn").on("click", function(){
 			location.href="member/memberUpdateView";
-		})
-	})
+		})	
+		
+		var userId = getCookie("cookieUserId"); 
+        $("input[name='id']").val(userId); 
+         
+        if($("input[name='id']").val() != ""){ // Cookie에 만료되지 않은 아이디가 있어 입력됬으면 체크박스가 체크되도록 표시
+            $("input[name='remember']").attr("checked", true);
+        }
+        
+        $("button[type='submit']", $('.login-form')).click(function(){ // Login Form을 Submit할 경우,
+            if($("input[name='remember']").is(":checked")){ // ID 기억하기 체크시 쿠키에 저장
+                var userId = $("input[name='id']").val();
+                setCookie("cookieUserId", userId, 7); // 7일동안 쿠키 보관
+            } else {
+                deleteCookie("cookieUserId");
+            }
+        });             
+    })
+  
+   function setCookie(cookieName, value, exdays){
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate()+exdays);
+        var cookieValue = escape(value)+((exdays==null)? "": "; expires="+exdate.toGMTString());
+        document.cookie = cookieName+"="+cookieValue;
+    }
+    function deleteCookie(cookieName){
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate()-1);
+        document.cookie = cookieName+"= "+"; expires="+expireDate.toGMTString();
+    }
+    function getCookie(cookieName){
+        cookieName = cookieName + '=';
+        var cookieData = document.cookie;
+        var start = cookieData.indexOf(cookieName);
+        var cookieValue = '';
+        if(start != -1){
+            start += cookieName.length;
+            var end = cookieData.indexOf(';', start);
+            if(end == -1) end = cookieData.length;
+            cookieValue = cookieData.substring(start, end);
+        }
+        return unescape(cookieValue);
+         
+    }
 </script>
 <body>
 <%@ include file="../include/loginMenu.jsp" %>
@@ -38,11 +80,10 @@
 					<input type="text" id="id" name="id" placeholder="ID를 입력하세요" class="form-control my-3 login-text" style="margin:auto; width:300px;" autofocus>
 					<label for="password"></label>
 					<input type="password" id="password" name="password" placeholder="PW를 입력하세요" class="form-control mb-3 login-text" style="margin:auto; width:300px;">
+					<input type="checkbox" name="remember" value="1">아이디 기억하기
 				</c:if>
 				<c:if test="${member != null }">
-					<p>${member.id}</p>
-					<button id="memberUpdateBtn" type="button">회원정보 변경</button>
-					<button id="logoutBtn" type="button">로그아웃</button>
+					<p>${member.id}님 반갑습니다!</p>
 				</c:if>
 				<div th:if="">
 			  <c:if test="${msg == false}">
@@ -51,9 +92,11 @@
 			</div>
 			<br>
 			<a href="/member/findIdForm" style="margin-right:10px;">아이디 찾기</a>	<a href="/member/findPwForm" style="margin-left:10px;">비밀번호 찾기</a><br><br>
-		
-			<button class="btn" name="Submit" value="Login" type="submit" th:text="Login">로그인</button>
+            
+            <c:if test="${member == null}">
+            <button class="btn" name="Submit" value="Login" type="submit" th:text="Login">로그인</button>	
 			<button id="registerBtn" type="button" class="btn" th:text="Regist" style="color:white;">회원가입</button>
+			</c:if>	
 			</form>
 	       </div>
          </div>
