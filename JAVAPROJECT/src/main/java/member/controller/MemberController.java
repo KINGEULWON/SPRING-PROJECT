@@ -91,10 +91,10 @@ public class MemberController {
 		MemberVO member = (MemberVO)session.getAttribute("member");
 		String sessionPw = member.getPassword();
 		String voPw = vo.getPassword();
-		if(!(sessionPw.equals(voPw))) {
+		 if(!(sessionPw.equals(voPw))) {
 			rttr.addFlashAttribute("msg",false);
 			return "redirect:/member/memberUpdateView";
-		}
+		 }
 		service.memberUpdate(vo);
 		session.invalidate();
 		return "member/memberUpdateDone";

@@ -21,12 +21,14 @@
     <a class="login1" href="${pageContext.request.contextPath}/">로그인</a>
     </c:if>
     <c:if test="${member != null }">
-    <a class="login4" href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
+    <a class="login2" href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
     </c:if>
     <c:if test="${member != null }">
     <a class="login3" href="${pageContext.request.contextPath}/member/memberUpdateView">회원정보 수정</a>
     </c:if>
-    <a class="login2" href="${pageContext.request.contextPath}/member/register">회원가입</a>
+    <c:if test="${member == null }">
+    <a class="login4" href="${pageContext.request.contextPath}/member/register">회원가입</a>
+    </c:if>
   </nav>
 </header>
 
