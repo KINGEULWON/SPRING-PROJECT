@@ -21,6 +21,21 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 인터셉터 객체 생성 -->
+	<beans:bean id="loginInterceptor" 
+            class="member.controller.LoginInterceptor"/>
+	<!-- Interceptor 설정 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/member/**"/>     
+            <exclude-mapping path="/member/login"/>
+            <exclude-mapping path="/member/register"/>
+            <exclude-mapping path="/member/findIdForm"/>
+            <exclude-mapping path="/member/findPwForm"/>
+            <beans:ref bean="loginInterceptor"/>
+        </interceptor>
+    </interceptors>
+	
 	<context:component-scan base-package="member.controller"/>
 	
 </beans:beans>
